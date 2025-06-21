@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+
+{% block title %}Register{% endblock %}
+
+{% block styles %}
+<style>
+
+    html {
+  zoom: 90%;
+}
+
+    body {
+        background-color: #00498D;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .navbar {
+        display: none; /* Hide the navbar for this page */
+    }
+    footer {
+        display: none; /* Hide the footer for this page */
+    }
+    .form-check-input:checked {
+        background-color: #00498D;
+        border-color: #00498D;
+    }
+    .form-control:focus {
+        border-color: #00498D;
+        box-shadow: 0 0 0 0.25rem rgba(0, 73, 141, 0.25);
+    }
+    .btn-primary {
+        background-color: #00498D;
+        border-color: #00498D;
+    }
+    .btn-primary:hover {
+        background-color: #003d75;
+        border-color: #003d75;
+    }
+    a {
+        color: #00498D;
+        text-decoration: none;
+    }
+    a:hover {
+        text-decoration: underline;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5 col-xl-4">
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-body p-4 p-md-5">
+                    <h2 class="text-center mb-4">Create Account</h2>
+                    
+                    <form method="post" action="{{ url_for('auth.register') }}">
+                        {{ form.hidden_tag() }}
+                        
+                        <div class="mb-3">
+                            <label class="form-label" for="{{ form.username.id }}">Name</label>
+                            {% if form.username.errors %}
+                                {{ form.username(class="form-control is-invalid") }}
+                                {% for error in form.username.errors %}
+                                    <div class="invalid-feedback">{{ error }}</div>
+                                {% endfor %}
+                            {% else %}
+                                {{ form.username(class="form-control", placeholder="Enter your name") }}
+                            {% endif %}
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label" for="{{ form.email.id }}">Email</label>
+                            {% if form.email.errors %}
+                                {{ form.email(class="form-control is-invalid") }}
+                                {% for error in form.email.errors %}
+                                    <div class="invalid-feedback">{{ error }}</div>
+                                {% endfor %}
+                            {% else %}
+                                {{ form.email(class="form-control", placeholder="Enter your email") }}
+                            {% endif %}
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label" for="{{ form.password.id }}">Password</label>
+                            {% if form.password.errors %}
+                                {{ form.password(class="form-control is-invalid") }}
+                                {% for error in form.password.errors %}
+                                    <div class="invalid-feedback">{{ error }}</div>
+                                {% endfor %}
+                            {% else %}
+                                {{ form.password(class="form-control", placeholder="••••••••••") }}
+                            {% endif %}
+                        </div>
+                        
+                        <div class="mb-3">
+                            {% if form.password2.errors %}
+                                {{ form.password2(class="form-control is-invalid", style="display: none;") }}
+                                {% for error in form.password2.errors %}
+                                    <div class="invalid-feedback">{{ error }}</div>
+                                {% endfor %}
+                            {% else %}
+                                {{ form.password2(class="form-control", style="display: none;") }}
+                            {% endif %}
+                        </div>
+                        
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="rememberMe" name="remember_me">
+                            <label class="form-check-label" for="rememberMe">Remember Me</label>
+                        </div>
+                        
+                        <div class="d-grid gap-2 mb-3">
+                            {{ form.submit(class="btn btn-primary btn-lg", value="Sign Up") }}
+                        </div>
+                        
+                        <div class="text-center">
+                            Already have an account? <a href="{{ url_for('auth.login') }}">Login</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get password fields
+        const passwordField = document.getElementById('{{ form.password.id }}');
+        const confirmPasswordField = document.getElementById('{{ form.password2.id }}');
+        
+        // Auto-sync the confirm password field with the password field
+        passwordField.addEventListener('input', function() {
+            confirmPasswordField.value = this.value;
+        });
+        
+        // Also handle it on form submission
+        const form = document.querySelector('form');
+        form.addEventListener('submit', function() {
+            confirmPasswordField.value = passwordField.value;
+        });
+    });
+</script>
+{% endblock %}
