@@ -4,13 +4,7 @@ For testing, Facebook accounts must be added as either developer or testing role
 
 ## Developer Facebook Account
 
-**Id:** sidharthgrover28@gmail.com  
-**Password:** Fdhelpdesk
-
-## Tester Facebook Account
-
-**Id:** sidharthgrover28291@gmail.com  
-**Password:** Fdhelpdesk
+Id-password available in google form comments.
 
 If you want to test other accounts, just add more tester accounts in developer dashboard via this Facebook Developer ID (sidharthgrover28@gmail.com).
 
